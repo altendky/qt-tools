@@ -5,12 +5,16 @@ import sys
 
 import qt5_applications
 
+import qt5_tools
+
 
 fspath = getattr(os, 'fspath', str)
 
 
 def run(application_name, environment=os.environ):
-    modified_environment = qt5_applications.create_environment(reference=environment)
+    modified_environment = qt5_tools.create_environment(
+        reference=environment,
+    )
     application_path = qt5_applications.application_path(application_name)
 
     completed_process = subprocess.run(

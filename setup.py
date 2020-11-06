@@ -1,84 +1,40 @@
-import itertools
-import os
-import pathlib
-import sys
-
-here = pathlib.Path(__file__).parent
-
-
-fspath = getattr(os, 'fspath', str)
-
-
-sys.path.insert(0, fspath(here))
-# TODO: yuck, put the build command in a separate project and
-#       build-requires it?
-import build
-sys.path.pop(0)
-
+import qt5_applications
 import setuptools
 import versioneer
 
-try:
-    import wheel.bdist_wheel
-except ImportError:
-    wheel = None
+import build
+import local_backend
 
 
-class InvalidVersionError(Exception):
-    pass
+# entry_points = {
+#     for name in qt5_applications._applications.keys()
+# }
 
+# console_scripts = [
+#     'qt5{application} = qt5_applications.entrypoints:{function_name}'.format(
+#         function_name=application.script_function_name,
+#         application=application.original_path.stem,
+#     )
+#     for name in qt5_applications._applications.keys()
+# ]
 
-if wheel is None:
-    BdistWheel = None
-else:
-    class BdistWheel(wheel.bdist_wheel.bdist_wheel):
-        def finalize_options(self):
-            super().finalize_options()
-            # Mark us as not a pure python package
-            self.root_is_pure = False
-
-        def get_tag(self):
-            python, abi, plat = super().get_tag()
-            python = 'py3'
-            abi = 'none'
-            return python, abi, plat
-
-
-def pad_version(v, segment_count=3):
-    split = v.split('.')
-
-    if len(split) > segment_count:
-        raise InvalidVersionError('{} has more than three segments'.format(v))
-
-    return '.'.join(split + ['0'] * (segment_count - len(split)))
-
-
-# TODO: really doesn't seem quite proper here and probably should come
-#       in some other way?
-qt_version = pad_version(os.environ.setdefault('QT_VERSION', '5.15.1'))
-
-qt5_applications_wrapper_version = versioneer.get_versions()['version']
-qt5_applications_version = '{}.{}'.format(qt_version, qt5_applications_wrapper_version)
+qt5_tools_wrapper_version = versioneer.get_versions()['version']
+qt5_tools_version = '{}.{}'.format(
+    local_backend.qt_version,
+    qt5_tools_wrapper_version,
+)
 
 
 with open('README.rst') as f:
     readme = f.read()
 
 
-class Dist(setuptools.Distribution):
-    def has_ext_modules(self):
-        # Event if we don't have extension modules (e.g. on PyPy) we want to
-        # claim that we do so that wheels get properly tagged as Python
-        # specific.  (thanks dstufft!)
-        return True
-
-
 setuptools.setup(
-    name="qt5-applications",
-    description="The collection of Qt tools easily installable in Python",
+    name="qt5-tools",
+    description="Wrappers for the raw Qt programs from qt5-applications",
     long_description=readme,
     long_description_content_type='text/x-rst',
-    url='https://github.com/altendky/qt-applications',
+    url='https://github.com/altendky/qt-tools',
     author="Kyle Altendorf",
     author_email='sda@fstab.net',
     license='LGPLv3',
@@ -98,11 +54,11 @@ setuptools.setup(
         'Topic :: Software Development',
         'Topic :: Utilities',
     ],
-    cmdclass={'bdist_wheel': BdistWheel, 'build_py': build.BuildPy},
-    distclass=Dist,
+    cmdclass={'build_py': build.BuildPy},
     packages=setuptools.find_packages('src'),
     package_dir={'': 'src'},
-    version=qt5_applications_version,
+    version=qt5_tools_version,
     include_package_data=True,
     python_requires=">=3.5",
+    install_requires=[local_backend.qt_applications_requirement],
 )

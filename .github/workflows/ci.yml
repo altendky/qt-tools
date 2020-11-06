@@ -24,13 +24,6 @@ jobs:
             runs-on: ubuntu-latest
             python_platform: linux
             container: docker://python:{0}-buster
-          - name: Windows
-            runs-on: windows-latest
-            python_platform: win32
-            vs_path: C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat
-#          - name: macOS
-#            runs-on: macos-latest
-#            python_platform: darwin
         python:
           - name: 3.8
             tox: py38
@@ -43,21 +36,9 @@ jobs:
           - qt_version: 5.15.0
           - qt_version: 5.15.1
         bitness:
-          - name: x32
-            action: x86
-            ilammy: x86
           - name: x64
             action: x64
             ilammy: x64
-        exclude:
-          - bitness:
-              name: x32
-            os:
-              name: Linux
-#           - bitness:
-#               name: x32
-#             os:
-#               name: macOS
     env:
       QT_VERSION: ${{ matrix.qt.qt_version }}
 
@@ -98,22 +79,10 @@ jobs:
         run: |
           mkdir -p dist/
           pip wheel -vvv --no-deps --wheel-dir dist/ --no-clean .
-      - name: Rename to manylinux2014 tag
-        if: matrix.os.python_platform == 'linux'
-        shell: python
-        run: |
-          import pathlib
-
-          dist = pathlib.Path.cwd() / 'dist'
-          [wheel] = dist.glob('*.whl')
-
-          # this is cheap...
-          retagged = wheel.parent / wheel.name.replace('linux', 'manylinux2014')
-          wheel.rename(retagged)
       - name: Archive individual wheel
         uses: actions/upload-artifact@v1
         with:
-          name: ${{ matrix.os.name }} Qt ${{ matrix.qt.qt_version }}-${{ matrix.bitness.name }}
+          name: Qt ${{ matrix.qt.qt_version }}
           path: dist/
       - name: Archive all wheels
         uses: actions/upload-artifact@v1
@@ -193,7 +162,7 @@ jobs:
       - name: Download
         uses: actions/download-artifact@v1
         with:
-          name: ${{ matrix.os.name }} Qt ${{ matrix.qt.qt_version }}-${{ matrix.bitness.name }}
+          name: Qt ${{ matrix.qt.qt_version }}
           path: dist/
       - name: Set up Python ${{ matrix.python.name }}-${{ matrix.bitness.name }}
         if: matrix.os.python_platform != 'linux'
