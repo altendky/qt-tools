@@ -1,13 +1,12 @@
-===============
-qt-applications
-===============
+========
+qt-tools
+========
 
 
 |PyPI| |Pythons| |GitHub|
 
 Perhaps docs will follow but for now see `the pyqt-tools readme`_.  This
-package provides just the collection of Qt applications to avoid repeating the
-same large files in several packages for different Python versions.
+package provides just the wrappers for `qt-applications`_.
 
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/qt5-applications.svg
@@ -23,3 +22,4 @@ same large files in several packages for different Python versions.
    :target: https://github.com/altendky/qt-applications
 
 .. _`the pyqt-tools readme`: https://github.com/altendky/pyqt-tools#pyqt-tools
+.. _`qt-applications`: https://github.com/altendky/qt-applications#qt-applications
