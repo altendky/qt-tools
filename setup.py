@@ -60,5 +60,8 @@ setuptools.setup(
     version=qt5_tools_version,
     include_package_data=True,
     python_requires=">=3.5",
-    install_requires=[local_backend.qt_applications_requirement],
+    install_requires=[
+        local_backend.qt_applications_requirement,
+        "msvc-runtime; sys_platform == 'win32'",
+    ],
 )
