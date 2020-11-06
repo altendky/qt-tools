@@ -42,7 +42,7 @@ qt_applications_wrapper_version = '2.0'
 use_qt_applications_url = True
 
 if use_qt_applications_url:
-    qt_applications_url = ' @ git+https://github.com/altendky/qt-applications@split_out_most'
+    qt_applications_url = ' @ git+https://github.com/altendky/qt-applications@main'
     qt_applications_version_specifier = ''
 else:
     qt_applications_url = ''
