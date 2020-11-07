@@ -78,10 +78,10 @@ def create_script_function_name(path: pathlib.Path):
     return path.stem.replace('-', '_')
 
 
-@attr.s(auto_attribs=True)
+@attr.s
 class Application:
-    name: str
-    path: pathlib.Path
+    name = attr.ib()
+    path = attr.ib()
 
 
 def write_entry_points(
