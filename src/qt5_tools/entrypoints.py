@@ -15,7 +15,7 @@ def run(application_name, environment=os.environ):
     modified_environment = qt5_tools.create_environment(
         reference=environment,
     )
-    application_path = qt5_applications.application_path(application_name)
+    application_path = qt5_applications._application_path(application_name)
 
     completed_process = subprocess.run(
         [

@@ -6,18 +6,6 @@ import build
 import local_backend
 
 
-# entry_points = {
-#     for name in qt5_applications._applications.keys()
-# }
-
-# console_scripts = [
-#     'qt5{application} = qt5_applications.entrypoints:{function_name}'.format(
-#         function_name=application.script_function_name,
-#         application=application.original_path.stem,
-#     )
-#     for name in qt5_applications._applications.keys()
-# ]
-
 qt5_tools_wrapper_version = versioneer.get_versions()['version']
 qt5_tools_version = '{}.{}'.format(
     local_backend.qt_version,

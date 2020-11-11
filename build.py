@@ -58,8 +58,8 @@ def checkpoint(name):
 
 def build(package_path: pathlib.Path):
     applications = [
-        Application(name=name, path=qt5_applications.application_path(name))
-        for name in qt5_applications.application_names()
+        Application(name=name, path=qt5_applications._application_path(name))
+        for name in qt5_applications._application_names()
     ]
 
     checkpoint('Write Entry Points')
