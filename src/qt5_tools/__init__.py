@@ -23,6 +23,14 @@ def add_to_env_var_path_list(environment, name, before, after):
     }
 
 
+def application_names():
+    return qt5_applications._application_names()
+
+
+def application_path(name):
+    return qt5_applications._application_path(name)
+
+
 def create_environment(reference):
     environment = dict(reference)
 
