@@ -1,8 +1,5 @@
 import os
 import pathlib
-import textwrap
-import traceback
-import typing
 
 import setuptools.build_meta
 
