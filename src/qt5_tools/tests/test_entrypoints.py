@@ -5,8 +5,6 @@ import sys
 
 import pytest
 
-import qt5_tools
-
 
 fspath = getattr(os, 'fspath', str)
 
@@ -20,10 +18,7 @@ def test_designer():
                 ),
             ],
             check=True,
-            env={
-                **qt5_tools.create_environment(os.environ),
-                'QT_DEBUG_PLUGINS': '1',
-            },
+            env={'QT_DEBUG_PLUGINS': '1'},
             timeout=10,
         )
 
@@ -37,10 +32,7 @@ def test_qmlscene():
                 ),
             ],
             check=True,
-            env={
-                **qt5_tools.create_environment(os.environ),
-                'QT_DEBUG_PLUGINS': '1',
-            },
+            env={'QT_DEBUG_PLUGINS': '1'},
             timeout=10,
         )
 
