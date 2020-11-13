@@ -6,6 +6,10 @@ __version__ = get_versions()['version']
 del get_versions
 
 
+def bin_path():
+    return qt5_applications._bin
+
+
 def application_names():
     return qt5_applications._application_names()
 
