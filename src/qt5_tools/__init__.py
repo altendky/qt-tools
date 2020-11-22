@@ -1,3 +1,5 @@
+import os
+
 import qt5_applications
 
 
@@ -16,3 +18,11 @@ def application_names():
 
 def application_path(name):
     return qt5_applications._application_path(name)
+
+
+def create_environment(reference=None):
+    # noop for now, but just in case something needs added
+    if reference is None:
+        reference = os.environ
+
+    return dict(reference)
