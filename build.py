@@ -34,22 +34,15 @@ class BuildPy(setuptools.command.build_py.build_py):
             lib_path = cwd / build_command.build_lib
             package_path = lib_path / package_name
 
-            results = build(package_path=package_path)
+            build(package_path=package_path)
 
             if getattr(self.distribution, 'entry_points', None) is None:
                 self.distribution.entry_points = {}
-            console_scripts = self.distribution.entry_points.setdefault('console_scripts', [])
-            console_scripts.extend(results.console_scripts)
         except:
             # something apparently consumes tracebacks (not exception messages)
             # for OSError at least.  let's avoid that silliness.
             traceback.print_exc()
             raise
-
-
-@attr.s(frozen=True)
-class Results:
-    console_scripts = attr.ib()
 
 
 def checkpoint(name):
@@ -65,13 +58,10 @@ def build(package_path: pathlib.Path):
     checkpoint('Write Entry Points')
     entry_points_py = package_path.joinpath('entrypoints.py')
 
-    console_scripts = write_entry_points(
+    write_subcommands(
         entry_points_py=entry_points_py,
         applications=applications,
     )
-
-    checkpoint('Return Results')
-    return Results(console_scripts=console_scripts)
 
 
 def create_script_function_name(path: pathlib.Path):
@@ -84,10 +74,24 @@ class Application:
     path = attr.ib()
 
 
-def write_entry_points(
+subcommand_template = """
+@main.command(
+    add_help_option=False,
+    context_settings={{
+        'ignore_unknown_options': True,
+        'allow_extra_args': True,
+    }},
+)
+@click.pass_context
+def {function_name}(ctx):
+    return run({application_name!r}, args=ctx.args)
+"""
+
+
+def write_subcommands(
         entry_points_py: pathlib.Path,
         applications: typing.List[Application],
-) -> typing.List[str]:
+) -> None:
     with entry_points_py.open('a', encoding='utf-8', newline='\n') as f:
         f.write(textwrap.dedent('''\
         
@@ -95,34 +99,19 @@ def write_entry_points(
         
         '''))
 
-        console_scripts = []
-
         for application in sorted(applications, key=lambda a: a.name):
             function_name = create_script_function_name(application.path)
-            script_name = application.path.stem
             stem = application.path.stem
 
-            partial_def = (
-                '{function_name}'
-                ' = functools.partial(run, application_name={application!r})\n'
-            )
-            partial_def_formatted = partial_def.format(
+            subcommand_source = subcommand_template.format(
                 function_name=function_name,
-                application=stem,
+                application_name=stem,
             )
-            f.write(partial_def_formatted)
 
-            console_scripts.append(
-                'qt5{application} = qt5_tools.entrypoints:{function_name}'.format(
-                    function_name=function_name,
-                    application=script_name,
-                )
-            )
+            f.write(subcommand_source + '\n')
 
         f.write(textwrap.dedent('''\
 
-            # ----  end of generated wrapper entry points
+            # ----  end of generated wrapper subcommands
 
         '''))
-
-    return console_scripts

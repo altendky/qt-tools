@@ -14,8 +14,9 @@ def test_designer():
         subprocess.run(
             [
                 fspath(
-                    pathlib.Path(sys.executable).with_name('qt5designer'),
+                    pathlib.Path(sys.executable).with_name('qt5-tools'),
                 ),
+                'designer',
             ],
             check=True,
             env={'QT_DEBUG_PLUGINS': '1'},
@@ -28,8 +29,9 @@ def test_qmlscene():
         subprocess.run(
             [
                 fspath(
-                    pathlib.Path(sys.executable).with_name('qt5qmlscene'),
+                    pathlib.Path(sys.executable).with_name('qt5-tools'),
                 ),
+                'qt5qmlscene',
             ],
             check=True,
             env={'QT_DEBUG_PLUGINS': '1'},

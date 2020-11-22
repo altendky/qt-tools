@@ -3,6 +3,7 @@ import os
 import subprocess
 import sys
 
+import click
 import qt5_applications
 
 import qt5_tools
@@ -11,7 +12,12 @@ import qt5_tools
 fspath = getattr(os, 'fspath', str)
 
 
-def run(application_name, environment=os.environ):
+@click.group()
+def main():
+    pass
+
+
+def run(application_name, args=(), environment=os.environ):
     modified_environment = qt5_tools.create_environment(
         reference=environment,
     )
@@ -20,12 +26,23 @@ def run(application_name, environment=os.environ):
     completed_process = subprocess.run(
         [
             fspath(application_path),
-            *sys.argv[1:],
+            *args,
         ],
         env=modified_environment,
     )
 
-    sys.exit(completed_process.returncode)
+    return completed_process.returncode
 
 
-# designer = functools.partial(run, application_name='designer')
+# written by build.py
+
+# @main.command(
+#     add_help_option=False,
+#     context_settings={
+#         'ignore_unknown_options': True,
+#         'allow_extra_args': True,
+#     },
+# )
+# @click.pass_context
+# def designer(ctx):
+#     return run('designer', args=ctx.args)
