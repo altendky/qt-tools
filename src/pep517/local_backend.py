@@ -57,7 +57,6 @@ qt_applications_requirement = 'qt{}-applications{}{}'.format(
 
 requirements = {
     'attrs': '== 20.3',
-    'setuptools': '~= 50.3',
     'versioneer-518': '== 0.18',
     'wheel': '~= 0.35.1',
 }
