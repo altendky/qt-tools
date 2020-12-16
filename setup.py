@@ -5,7 +5,7 @@ import build
 import local_backend
 
 
-qt5_tools_wrapper_version = versioneer.get_versions()['version']
+qt5_tools_wrapper_version = '1.0.1'
 qt5_tools_version = '{}.{}'.format(
     local_backend.qt_version,
     qt5_tools_wrapper_version,
