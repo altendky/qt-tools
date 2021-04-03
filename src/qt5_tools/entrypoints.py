@@ -23,8 +23,14 @@ def run(application_name, args=(), environment=os.environ):
     )
     application_path = qt5_applications._application_path(application_name)
 
+    if sys.platform == 'darwin':
+        launch_commands = ['open']
+    else:
+        launch_commands = []
+
     completed_process = subprocess.run(
         [
+            *launch_commands,
             fspath(application_path),
             *args,
         ],
