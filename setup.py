@@ -28,9 +28,10 @@ setuptools.setup(
     classifiers=[
         # complete classifier list: https://pypi.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 4 - Beta',
-        'Environment :: Win32 (MS Windows)',
         'Intended Audience :: Developers',
         "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+        'Operating System :: POSIX :: Linux',
+        'Operating System :: MacOS :: MacOS X',
         'Operating System :: Microsoft :: Windows',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
