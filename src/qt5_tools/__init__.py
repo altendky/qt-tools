@@ -1,6 +1,10 @@
 import os
+import sys
 
 import qt5_applications
+
+
+fspath = getattr(os, 'fspath', str)
 
 
 from ._version import get_versions
@@ -26,3 +30,13 @@ def create_environment(reference=None):
         reference = os.environ
 
     return dict(reference)
+
+
+def create_command_elements(name, sys_platform=sys.platform):
+    path = application_path(name)
+
+    if sys_platform == 'darwin' and path.suffix == '.app':
+        inner = path.joinpath('Contents', 'MacOS', path.stem)
+        return [fspath(inner)]
+
+    return [fspath(path)]
