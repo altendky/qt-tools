@@ -1,3 +1,4 @@
+import os
 import setuptools
 import versioneer
 
@@ -16,8 +17,16 @@ with open('README.rst') as f:
     readme = f.read()
 
 
+# TODO: CAMPid 98743987416764218762139847764318798
+qt_major_version = os.environ['QT_VERSION'].partition('.')[0]
+
+
+distribution_name = "qt{}-tools".format(qt_major_version)
+import_name = distribution_name.replace('-', '_')
+
+
 setuptools.setup(
-    name="qt5-tools",
+    name=distribution_name,
     description="Wrappers for the raw Qt programs from qt5-applications",
     long_description=readme,
     long_description_content_type='text/x-rst',
@@ -43,7 +52,7 @@ setuptools.setup(
     ],
     cmdclass={'build_py': build.BuildPy},
     packages=setuptools.find_packages('src'),
-    package_dir={'': 'src'},
+    package_dir={import_name: 'src/qt_tools'},
     version=qt5_tools_version,
     include_package_data=True,
     python_requires=">=3.5",
