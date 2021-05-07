@@ -51,7 +51,10 @@ setuptools.setup(
         'Topic :: Utilities',
     ],
     cmdclass={'build_py': build.BuildPy},
-    packages=setuptools.find_packages('src'),
+    packages=[
+        package.replace('qt_', 'qt{}_'.format(qt_major_version))
+        for package in setuptools.find_packages('src')
+    ],
     package_dir={import_name: 'src/qt_tools'},
     version=qt_tools_version,
     include_package_data=True,
