@@ -61,6 +61,6 @@ setuptools.setup(
         'click~=7.0',
     ],
     entry_points={
-        'console_scripts': ['qt{major}-tools = qt{major}_tools.entrypoints:main'.format(major=qt_major_version],
+        'console_scripts': ['qt{major}-tools = qt{major}_tools.entrypoints:main'.format(major=qt_major_version)],
     }
 )
