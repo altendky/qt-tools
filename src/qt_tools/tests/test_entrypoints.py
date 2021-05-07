@@ -10,7 +10,7 @@ fspath = getattr(os, 'fspath', str)
 
 # TODO: CAMPid 0970432108721340872130742130870874321
 import pkg_resources
-major = int(pkg_resources.get_distribution(__name__).version.partition(".")[0])
+major = int(pkg_resources.get_distribution(__name__.partition('.')[0]).version.partition(".")[0])
 
 
 def test_designer():
