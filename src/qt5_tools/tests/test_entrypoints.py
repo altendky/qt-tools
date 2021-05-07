@@ -31,7 +31,7 @@ def test_qmlscene():
                 fspath(
                     pathlib.Path(sys.executable).with_name('qt5-tools'),
                 ),
-                'qt5qmlscene',
+                'qmlscene',
             ],
             check=True,
             env={'QT_DEBUG_PLUGINS': '1'},
