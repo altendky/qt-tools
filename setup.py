@@ -6,10 +6,10 @@ import build
 import local_backend
 
 
-qt5_tools_wrapper_version = versioneer.get_versions()['version']
-qt5_tools_version = '{}.{}'.format(
+qt_tools_wrapper_version = versioneer.get_versions()['version']
+qt_tools_version = '{}.{}'.format(
     local_backend.qt_version,
-    qt5_tools_wrapper_version,
+    qt_tools_wrapper_version,
 )
 
 
@@ -27,7 +27,7 @@ import_name = distribution_name.replace('-', '_')
 
 setuptools.setup(
     name=distribution_name,
-    description="Wrappers for the raw Qt programs from qt5-applications",
+    description="Wrappers for the raw Qt programs from qt{}-applications".format(qt_major_version),
     long_description=readme,
     long_description_content_type='text/x-rst',
     url='https://github.com/altendky/qt-tools',
@@ -53,7 +53,7 @@ setuptools.setup(
     cmdclass={'build_py': build.BuildPy},
     packages=setuptools.find_packages('src'),
     package_dir={import_name: 'src/qt_tools'},
-    version=qt5_tools_version,
+    version=qt_tools_version,
     include_package_data=True,
     python_requires=">=3.5",
     install_requires=[
@@ -61,6 +61,6 @@ setuptools.setup(
         'click~=7.0',
     ],
     entry_points={
-        'console_scripts': ['qt5-tools = qt5_tools.entrypoints:main'],
+        'console_scripts': ['qt{major}-tools = qt{major}_tools.entrypoints:main'.format(major=qt_major_version],
     }
 )
