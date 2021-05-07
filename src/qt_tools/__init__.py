@@ -1,4 +1,6 @@
 import os
+import sys
+import sysconfig
 
 
 # TODO: CAMPid 0970432108721340872130742130870874321
@@ -39,9 +41,35 @@ def application_path(name):
     return qt_applications._application_path(name)
 
 
+def _add_to_env_var_path_list(environment, name, before, after):
+    return {
+        name: os.pathsep.join((
+            *before,
+            environment.get(name, ''),
+            *after
+        ))
+    }
+
+
 def create_environment(reference=None):
-    # noop for now, but just in case something needs added
     if reference is None:
         reference = os.environ
 
-    return dict(reference)
+    environment = dict(reference)
+
+    if sys.platform in ['linux', 'darwin']:
+        environment.update(_add_to_env_var_path_list(
+            environment=environment,
+            name='LD_LIBRARY_PATH',
+            before=[''],
+            after=[sysconfig.get_config_var('LIBDIR')],
+        ))
+    if sys.platform == 'win32':
+        environment.update(_add_to_env_var_path_list(
+            environment=environment,
+            name='PATH',
+            before=[''],
+            after=[sysconfig.get_path('scripts')],
+        ))
+
+    return environment
