@@ -39,7 +39,7 @@ qt_applications_wrapper_range = ['2', '3']
 use_qt_applications_url = True
 
 if use_qt_applications_url:
-    qt_applications_url = ' @ git+https://github.com/altendky/qt-applications@main'
+    qt_applications_url = ' @ git+https://github.com/altendky/qt-applications@add_qt6.0.0'
     qt_applications_version_specifier = ''
 else:
     qt_applications_url = ''
