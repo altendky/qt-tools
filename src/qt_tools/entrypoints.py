@@ -11,7 +11,7 @@ def import_it(*segments):
     import importlib
     import pkg_resources
 
-    major = int(pkg_resources.get_distribution(__name__).version.partition(".")[0])
+    major = int(pkg_resources.get_distribution(__name__.partition('.')[0]).version.partition(".")[0])
 
     m = {
         "pyqt_tools": "pyqt{major}_tools".format(major=major),
