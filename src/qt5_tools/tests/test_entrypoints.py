@@ -5,11 +5,15 @@ import sys
 
 import pytest
 
+import qt5_tools
+
 
 fspath = getattr(os, 'fspath', str)
 
 
 def test_designer():
+    environment = qt5_tools.create_environment()
+
     with pytest.raises(subprocess.TimeoutExpired):
         subprocess.run(
             [
@@ -19,12 +23,14 @@ def test_designer():
                 'designer',
             ],
             check=True,
-            env={'QT_DEBUG_PLUGINS': '1'},
+            env={**environment, 'QT_DEBUG_PLUGINS': '1'},
             timeout=10,
         )
 
 
 def test_qmlscene():
+    environment = qt5_tools.create_environment()
+
     with pytest.raises(subprocess.TimeoutExpired):
         subprocess.run(
             [
@@ -34,7 +40,7 @@ def test_qmlscene():
                 'qmlscene',
             ],
             check=True,
-            env={'QT_DEBUG_PLUGINS': '1'},
+            env={**environment, 'QT_DEBUG_PLUGINS': '1'},
             timeout=10,
         )
 
