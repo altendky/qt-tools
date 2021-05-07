@@ -8,13 +8,17 @@ import pytest
 
 fspath = getattr(os, 'fspath', str)
 
+# TODO: CAMPid 0970432108721340872130742130870874321
+import pkg_resources
+major = int(pkg_resources.get_distribution(__name__).version.partition(".")[0])
+
 
 def test_designer():
     with pytest.raises(subprocess.TimeoutExpired):
         subprocess.run(
             [
                 fspath(
-                    pathlib.Path(sys.executable).with_name('qt5-tools'),
+                    pathlib.Path(sys.executable).with_name('qt{}-tools'.format(major)),
                 ),
                 'designer',
             ],
@@ -29,9 +33,9 @@ def test_qmlscene():
         subprocess.run(
             [
                 fspath(
-                    pathlib.Path(sys.executable).with_name('qt5-tools'),
+                    pathlib.Path(sys.executable).with_name('qt{}-tools'.format(major)),
                 ),
-                'qt5qmlscene',
+                'qt{}qmlscene'.format(major),
             ],
             check=True,
             env={'QT_DEBUG_PLUGINS': '1'},
