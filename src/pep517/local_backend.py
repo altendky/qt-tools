@@ -29,7 +29,7 @@ def pad_version(v, segment_count=3):
 
 # TODO: CAMPid 98743987416764218762139847764318798
 # TODO: really doesn't seem quite proper here and probably should come
-qt_version = pad_version(os.environ.setdefault('QT_VERSION', '6.0.2'))
+qt_version = pad_version(os.environ.setdefault('QT_VERSION', '6.1.0'))
 qt_major_version = qt_version.partition('.')[0]
 
 # Inclusive of the lower bound and exclusive of the upper
