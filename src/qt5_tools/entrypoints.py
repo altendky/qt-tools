@@ -17,17 +17,23 @@ def main():
     pass
 
 
-def run(application_name, args=(), environment=os.environ):
+def run(
+        application_name,
+        args=(),
+        environment=os.environ,
+        sys_platform=sys.platform,
+):
     modified_environment = qt5_tools.create_environment(
         reference=environment,
     )
-    application_path = qt5_applications._application_path(application_name)
+
+    command_elements = qt5_tools.create_command_elements(
+        name=application_name,
+        sys_platform=sys_platform,
+    )
 
     completed_process = subprocess.run(
-        [
-            fspath(application_path),
-            *args,
-        ],
+        [*command_elements, *args],
         env=modified_environment,
     )
 
