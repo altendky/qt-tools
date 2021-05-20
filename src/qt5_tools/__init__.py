@@ -57,7 +57,6 @@ def create_environment(reference=None):
         ))
 
     return environment
-    return dict(reference)
 
 
 def create_command_elements(name, sys_platform=sys.platform):
