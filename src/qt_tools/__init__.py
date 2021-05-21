@@ -24,6 +24,9 @@ def import_it(*segments):
 qt_applications = import_it("qt_applications")
 
 
+fspath = getattr(os, 'fspath', str)
+
+
 from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions
@@ -73,3 +76,13 @@ def create_environment(reference=None):
         ))
 
     return environment
+
+
+def create_command_elements(name, sys_platform=sys.platform):
+    path = application_path(name)
+
+    if sys_platform == 'darwin' and path.suffix == '.app':
+        inner = path.joinpath('Contents', 'MacOS', path.stem)
+        return [fspath(inner)]
+
+    return [fspath(path)]

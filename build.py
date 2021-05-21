@@ -121,7 +121,7 @@ def write_subcommands(
 
         for application in sorted(applications, key=lambda a: a.name):
             function_name = create_script_function_name(application.path)
-            stem = application.path.stem
+            stem = application.path.stem.casefold()
 
             subcommand_source = subcommand_template.format(
                 function_name=function_name,

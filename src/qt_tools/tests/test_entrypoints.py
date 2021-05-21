@@ -2,11 +2,14 @@ import os
 import pathlib
 import subprocess
 import sys
+import sysconfig
 
 import pytest
 
 
 fspath = getattr(os, 'fspath', str)
+
+scripts_path = pathlib.Path(sysconfig.get_path('scripts'))
 
 
 # TODO: CAMPid 0970432108721340872130742130870874321
@@ -38,9 +41,7 @@ def test_designer():
     with pytest.raises(subprocess.TimeoutExpired):
         subprocess.run(
             [
-                fspath(
-                    pathlib.Path(sys.executable).with_name('qt{}-tools'.format(major)),
-                ),
+                fspath(scripts_path.joinpath('qt{}-tools'.format(major))),
                 'designer',
             ],
             check=True,
@@ -55,9 +56,7 @@ def test_qmlscene():
     with pytest.raises(subprocess.TimeoutExpired):
         subprocess.run(
             [
-                fspath(
-                    pathlib.Path(sys.executable).with_name('qt{}-tools'.format(major)),
-                ),
+                fspath(scripts_path.joinpath('qt{}-tools'.format(major))),
                 'qmlscene',
             ],
             check=True,
@@ -69,7 +68,8 @@ def test_qmlscene():
 # def test_language():
 #     completed_process = subprocess.run(
 #         [
-#             fspath(pathlib.Path(sys.executable).with_name('qtdiag')),
+#             fspath(scripts_path.joinpath('qt5-tools')),
+#             'qtdiag',
 #         ],
 #         check=True,
 #         env={**os.environ, 'LANGUAGE': 'de_DE'},
