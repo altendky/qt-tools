@@ -10,8 +10,28 @@ import traceback
 import typing
 
 import attr
-import qt5_applications
 import setuptools.command.build_py
+
+
+# TODO: CAMPid 0970432108721340872130742130870874321
+def import_it(*segments):
+    import importlib
+
+    version = os.environ['QT_VERSION']
+    major = version.partition('.')[0]
+
+    m = {
+        "pyqt_tools": "pyqt{major}_tools".format(major=major),
+        "pyqt_plugins": "pyqt{major}_plugins".format(major=major),
+        "qt_tools": "qt{major}_tools".format(major=major),
+        "qt_applications": "qt{major}_applications".format(major=major),
+    }
+
+    majored = [m[segments[0]], *segments[1:]]
+    return importlib.import_module(".".join(majored))
+
+
+qt_applications = import_it("qt_applications")
 
 
 fspath = getattr(os, 'fspath', str)
@@ -51,8 +71,8 @@ def checkpoint(name):
 
 def build(package_path: pathlib.Path):
     applications = [
-        Application(name=name, path=qt5_applications._application_path(name))
-        for name in qt5_applications._application_names()
+        Application(name=name, path=qt_applications._application_path(name))
+        for name in qt_applications._application_names()
     ]
 
     checkpoint('Write Entry Points')

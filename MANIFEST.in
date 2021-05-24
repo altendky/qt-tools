@@ -1,3 +1,4 @@
-recursive-include src/qt5_tools *
+recursive-include src/qt_tools *
 include versioneer.py
-include src/qt5_tools/_version.py
+include pyproject.toml
+include src/qt_tools/_version.py
