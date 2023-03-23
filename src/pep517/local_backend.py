@@ -36,10 +36,10 @@ qt_major_version = qt_version.partition('.')[0]
 qt_applications_wrapper_range = ['2.2', '3']
 
 # Must be False for release.  PyPI won't let you upload with a URL dependency.
-use_qt_applications_url = False
+use_qt_applications_url = True
 
 if use_qt_applications_url:
-    qt_applications_url = ' @ git+https://github.com/altendky/qt-applications@main'
+    qt_applications_url = ' @ git+https://github.com/altendky/qt-applications@maybe'
     qt_applications_version_specifier = ''
 else:
     qt_applications_url = ''
