@@ -58,7 +58,7 @@ def run(
     return completed_process.returncode
 
 
-# written by build.py
+# written by _build.py
 
 # @main.command(
 #     add_help_option=False,

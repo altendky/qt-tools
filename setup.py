@@ -2,7 +2,7 @@ import os
 import setuptools
 import versioneer
 
-import build
+import _build
 import local_backend
 
 
@@ -51,7 +51,7 @@ setuptools.setup(
         'Topic :: Software Development',
         'Topic :: Utilities',
     ],
-    cmdclass={'build_py': build.BuildPy},
+    cmdclass={'build_py': _build.BuildPy},
     packages=[
         package.replace('qt_', 'qt{}_'.format(qt_major_version))
         for package in setuptools.find_packages('src')
