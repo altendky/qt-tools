@@ -59,7 +59,7 @@ setuptools.setup(
     package_dir={import_name: 'src/qt_tools'},
     version=qt_tools_version,
     include_package_data=True,
-    python_requires=">=3.8",
+    python_requires=">=3.7",
     install_requires=[
         local_backend.qt_applications_requirement,
         'click~=7.0',
