@@ -62,7 +62,7 @@ setuptools.setup(
     python_requires=">=3.7",
     install_requires=[
         local_backend.qt_applications_requirement,
-        'click~=7.0',
+        'click',
     ],
     entry_points={
         'console_scripts': ['qt{major}-tools = qt{major}_tools.entrypoints:main'.format(major=qt_major_version)],
