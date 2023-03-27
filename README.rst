@@ -9,13 +9,13 @@ Perhaps docs will follow but for now see `the pyqt-tools readme`_.  This
 package provides just the wrappers for `qt-applications`_.
 
 
-.. |PyPI| image:: https://img.shields.io/pypi/v/qt5-applications.svg
+.. |PyPI| image:: https://img.shields.io/pypi/v/qt6-applications.svg
    :alt: PyPI version
-   :target: https://pypi.org/project/qt5-applications/
+   :target: https://pypi.org/project/qt6-applications/
 
-.. |Pythons| image:: https://img.shields.io/pypi/pyversions/qt5-applications.svg
+.. |Pythons| image:: https://img.shields.io/pypi/pyversions/qt6-applications.svg
    :alt: supported Python versions
-   :target: https://pypi.org/project/qt5-applications/
+   :target: https://pypi.org/project/qt6-applications/
 
 .. |GitHub| image:: https://img.shields.io/github/last-commit/altendky/qt-applications/main.svg
    :alt: source on GitHub

@@ -2,7 +2,7 @@ import os
 import setuptools
 import versioneer
 
-import build
+import _build
 import local_backend
 
 
@@ -16,9 +16,19 @@ qt_tools_version = '{}.{}'.format(
 with open('README.rst') as f:
     readme = f.read()
 
-
 # TODO: CAMPid 98743987416764218762139847764318798
 qt_major_version = os.environ['QT_VERSION'].partition('.')[0]
+
+
+if qt_major_version == '5':
+    replacements = [
+        ["qt6", "qt5"],
+        ["Qt6", "Qt5"],
+        ["Qt6", "Qt 5"],
+        ["6.4", "5.15"],
+    ]
+    for a, b in replacements:
+        readme = readme.replace(a, b)
 
 
 distribution_name = "qt{}-tools".format(qt_major_version)
@@ -51,7 +61,7 @@ setuptools.setup(
         'Topic :: Software Development',
         'Topic :: Utilities',
     ],
-    cmdclass={'build_py': build.BuildPy},
+    cmdclass={'build_py': _build.BuildPy},
     packages=[
         package.replace('qt_', 'qt{}_'.format(qt_major_version))
         for package in setuptools.find_packages('src')
@@ -59,10 +69,10 @@ setuptools.setup(
     package_dir={import_name: 'src/qt_tools'},
     version=qt_tools_version,
     include_package_data=True,
-    python_requires=">=3.5",
+    python_requires=">=3.7",
     install_requires=[
         local_backend.qt_applications_requirement,
-        'click~=7.0',
+        'click',
     ],
     entry_points={
         'console_scripts': ['qt{major}-tools = qt{major}_tools.entrypoints:main'.format(major=qt_major_version)],
