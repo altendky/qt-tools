@@ -16,6 +16,10 @@ qt_tools_version = '{}.{}'.format(
 with open('README.rst') as f:
     readme = f.read()
 
+# TODO: CAMPid 98743987416764218762139847764318798
+qt_major_version = os.environ['QT_VERSION'].partition('.')[0]
+
+
 if qt_major_version == '5':
     replacements = [
         ["qt6", "qt5"],
@@ -25,10 +29,6 @@ if qt_major_version == '5':
     ]
     for a, b in replacements:
         readme = readme.replace(a, b)
-
-
-# TODO: CAMPid 98743987416764218762139847764318798
-qt_major_version = os.environ['QT_VERSION'].partition('.')[0]
 
 
 distribution_name = "qt{}-tools".format(qt_major_version)
